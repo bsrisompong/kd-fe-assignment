@@ -1,8 +1,11 @@
-import { MantineProvider } from "@mantine/core";
-import { theme } from "@/styles/theme";
-import { QueryClientProvider } from "@tanstack/react-query";
+'use client';
 
-import { queryClient } from "@/libs/react-query";
+import { MantineProvider } from '@mantine/core';
+import { QueryClientProvider } from '@tanstack/react-query';
+
+import { theme } from '@/styles/theme';
+
+import { queryClient } from '@/libs/react-query';
 
 interface AppProviderProps {
   children: React.ReactNode;
