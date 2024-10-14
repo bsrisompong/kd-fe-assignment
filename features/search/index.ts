@@ -1,0 +1,2 @@
+// pages
+export * from "./pages";
