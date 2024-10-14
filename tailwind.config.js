@@ -1,15 +1,28 @@
 /** @type {import('tailwindcss').Config} */
 
-import { primary } from "./styles/colors";
+import * as colors from "./styles/colors";
 
 module.exports = {
-  content: ["./app/**/*.{js,ts,jsx,tsx}"],
+  content: [
+    "./pages/**/*.{js,ts,jsx,tsx}",
+    "./components/**/*.{js,ts,jsx,tsx}",
+    "./layouts/**/*.{js,ts,jsx,tsx}",
+    "./app/**/*.{js,ts,jsx,tsx}",
+  ],
   theme: {
     extend: {
       colors: {
-        primary: primary,
+        blue: colors.blue,
+        red: colors.red,
+        lime: colors.lime,
+        orange: colors.orange,
+        yellow: colors.yellow,
+        gray: colors.gray,
       },
     },
   },
   plugins: [],
+  corePlugins: {
+    preflight: false,
+  },
 };
