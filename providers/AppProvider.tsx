@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { MantineProvider } from '@mantine/core';
-import { QueryClientProvider } from '@tanstack/react-query';
+import { MantineProvider } from "@mantine/core";
+import { QueryClientProvider } from "@tanstack/react-query";
 
-import { theme } from '@/styles/theme';
+import { resolver, theme } from "@/styles/theme";
 
-import { queryClient } from '@/libs/react-query';
+import { queryClient } from "@/libs/react-query";
 
 interface AppProviderProps {
   children: React.ReactNode;
@@ -13,7 +13,7 @@ interface AppProviderProps {
 
 const AppProvider = ({ children }: AppProviderProps) => {
   return (
-    <MantineProvider theme={theme}>
+    <MantineProvider theme={theme} cssVariablesResolver={resolver}>
       <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
     </MantineProvider>
   );

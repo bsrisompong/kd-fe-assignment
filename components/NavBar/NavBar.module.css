@@ -1,0 +1,17 @@
+.link {
+  @apply flex items-center gap-4;
+  @apply text-inherit font-semibold text-lg;
+  @apply px-4 py-4;
+}
+
+.active {
+  @apply bg-gray-200 rounded-lg border-2;
+  & svg {
+    &:global(.search) {
+      /* @apply text-[var(--mantine-color-giphy-purple)]; */
+    }
+    &:global(.fav) {
+      @apply text-[var(--mantine-color-giphy-red)];
+    }
+  }
+}

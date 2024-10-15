@@ -1,6 +1,6 @@
 "use client";
 
-import { createTheme } from "@mantine/core";
+import { createTheme, CSSVariablesResolver } from "@mantine/core";
 
 import { customColor } from "./colors";
 
@@ -97,5 +97,27 @@ export const theme = createTheme({
     xl: "0 calc(0.0625rem * var(--mantine-scale)) calc(0.1875rem * var(--mantine-scale)) rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05) 0 calc(2.25rem * var(--mantine-scale)) calc(1.75rem * var(--mantine-scale)) calc(-0.4375rem * var(--mantine-scale)), rgba(0, 0, 0, 0.04) 0 calc(1.0625rem * var(--mantine-scale)) calc(1.0625rem * var(--mantine-scale)) calc(-0.4375rem * var(--mantine-scale))",
   },
   components: {},
-  other: {},
+  other: {
+    colors: {
+      "giphy-green": "#2AFC9C",
+      "giphy-purple": "#9740FA",
+      "giphy-dark-purple": "#4A1F7C",
+      "giphy-ligh-blue": "#22CDFB",
+      "giphy-yellow": "#FFF39F",
+      "giphy-red": "#FB6769",
+    },
+  },
+});
+
+export const resolver: CSSVariablesResolver = () => ({
+  variables: {
+    "--mantine-color-giphy-green": theme.other?.colors["giphy-green"],
+    "--mantine-color-giphy-purple": theme.other?.colors["giphy-purple"],
+    "--mantine-color-giphy-dark-purple": theme.other?.colors["giphy-dark-purple"],
+    "--mantine-color-giphy-ligh-blue": theme.other?.colors["giphy-ligh-blue"],
+    "--mantine-color-giphy-yellow": theme.other?.colors["giphy-yellow"],
+    "--mantine-color-giphy-red": theme.other?.colors["giphy-red"],
+  },
+  light: {},
+  dark: {},
 });

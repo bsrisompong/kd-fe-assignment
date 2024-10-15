@@ -1,5 +1,5 @@
 // pages
-export { default as SearchPage } from "./pages/search-page";
+export { default as SearchPage } from "./pages/SearchPage";
 
 // apis
 export * from "./apis";

@@ -1,0 +1,8 @@
+.container {
+  @apply h-full w-full overflow-auto;
+}
+
+.gridContainer {
+  @apply columns-1 gap-4;
+  @apply xs:columns-2 sm:columns-3 md:columns-4;
+}
