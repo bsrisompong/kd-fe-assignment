@@ -38,5 +38,6 @@ module.exports = {
     "react/jsx-one-expression-per-line": "off",
     "no-prototype-builtins": "off",
     "no-nested-ternary": "off",
+    "@typescript-eslint/no-unused-vars": "warn",
   },
 };

@@ -8,6 +8,7 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx}",
     "./layouts/**/*.{js,ts,jsx,tsx}",
     "./app/**/*.{js,ts,jsx,tsx}",
+    "./features/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     extend: {
@@ -19,10 +20,18 @@ module.exports = {
         yellow: colors.yellow,
         gray: colors.gray,
       },
+      screens: {
+        xs: "480px",
+      },
     },
   },
   plugins: [],
   corePlugins: {
     preflight: false,
+  },
+  variants: {
+    extend: {
+      breakInside: ["responsive"],
+    },
   },
 };
