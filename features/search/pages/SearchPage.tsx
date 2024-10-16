@@ -8,7 +8,7 @@ import { IGif } from "@giphy/js-types";
 import clsx from "clsx";
 
 // hooks
-import { useBreakpoints, useQueryParams } from "@/hooks";
+import { useBreakpoints, useGetColumns, useQueryParams } from "@/hooks";
 // apis
 import { fetchSearchGiftsInfinite, fetchTrendingGiftsInfinite } from "../apis";
 // components
@@ -19,28 +19,8 @@ import classes from "./SearchPage.module.css";
 
 const LIMIT = 20;
 
-const getColumnNumber = ({
-  isSmallMobile,
-  isMobile,
-  isTablet,
-  isDesktop,
-}: {
-  isSmallMobile?: boolean;
-  isMobile?: boolean;
-  isSmallTablet?: boolean;
-  isTablet?: boolean;
-  isDesktop?: boolean;
-}) => {
-  if (isSmallMobile) return 1;
-  if (isMobile) return 2;
-  if (isTablet) return 3;
-  if (isDesktop) return 4;
-  return 1;
-};
-
-export default function HomePage() {
-  const breakpoints = useBreakpoints();
-  const columns = getColumnNumber({ ...breakpoints });
+export default function SearchPage() {
+  const { columns } = useGetColumns();
   const { getQueryParams } = useQueryParams();
   const { search } = getQueryParams();
 
@@ -92,7 +72,7 @@ export default function HomePage() {
       <Group className={clsx(classes.searchWrapper)}>
         <Searchbar />
       </Group>
-      <div className="relative p-0 h-[calc(100dvh-100px)]">
+      <div className="relative h-[calc(100dvh-100px)]">
         <div className="relative max-w-[1440px] mx-auto">
           {!isFetching && !isFetchingNextPage && allItems.length === 0 && (
             <NotFound className="h-full" />

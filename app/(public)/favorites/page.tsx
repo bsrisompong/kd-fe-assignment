@@ -1,7 +1,5 @@
-import React from "react";
+import { FavoritesPage } from "@/features/favorites";
 
-const FavoritesRoute = () => {
-  return <div>FavoritesRoute</div>;
-};
+const FavoritesRoute = () => <FavoritesPage />;
 
 export default FavoritesRoute;
