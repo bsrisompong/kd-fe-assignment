@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo } from "react";
-import { Container, Group, LoadingOverlay } from "@mantine/core";
+import { Group, LoadingOverlay } from "@mantine/core";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { Masonry, RenderComponentProps } from "masonic";
 import { IGif } from "@giphy/js-types";
@@ -93,7 +93,7 @@ export default function HomePage() {
         <Searchbar />
       </Group>
       <div className="relative p-0 h-[calc(100dvh-100px)]">
-        <Container size={1440} className="relative">
+        <div className="relative max-w-[1440px] mx-auto">
           {!isFetching && !isFetchingNextPage && allItems.length === 0 && (
             <NotFound className="h-full" />
           )}
@@ -106,12 +106,12 @@ export default function HomePage() {
             overscanBy={5}
           />
           <BottomLoader visible={hasNextPage && isFetchingNextPage} />
-        </Container>
-        <LoadingOverlay
-          visible={isLoading}
-          loaderProps={{ type: "oval", size: "lg", color: "black" }}
-        />
+        </div>
       </div>
+      <LoadingOverlay
+        visible={isLoading}
+        loaderProps={{ type: "oval", size: "lg", color: "black" }}
+      />
     </>
   );
 }

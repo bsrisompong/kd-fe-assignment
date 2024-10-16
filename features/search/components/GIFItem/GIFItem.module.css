@@ -6,7 +6,7 @@
     }
 
     & :global(.fav-btn-wrapper) {
-      @apply block z-50;
+      @apply block z-10;
     }
 
     & :global(.user-wrapper) {
@@ -21,12 +21,13 @@
 }
 
 .favBtn {
-  @apply text-[var(--mantine-color-gray-5)] opacity-85;
+  @apply text-[var(--mantine-color-gray-5)] opacity-95;
   &:hover {
-    @apply text-[var(--mantine-color-gray-7)] opacity-100;
+    @apply text-[var(--mantine-color-gray-7)];
+    @apply opacity-100;
   }
   &:global(.favorited) {
-    @apply text-[var(--mantine-color-giphy-red)];
+    @apply text-[var(--mantine-color-giphy-red)] opacity-100 hover:brightness-95;
   }
 }
 
