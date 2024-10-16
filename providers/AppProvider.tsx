@@ -2,10 +2,12 @@
 
 import { MantineProvider } from "@mantine/core";
 import { QueryClientProvider } from "@tanstack/react-query";
+import { Provider as ReduxProvider } from "react-redux";
 
 import { resolver, theme } from "@/styles/theme";
 
 import { queryClient } from "@/libs/react-query";
+import { store } from "@/stores";
 
 interface AppProviderProps {
   children: React.ReactNode;
@@ -13,9 +15,11 @@ interface AppProviderProps {
 
 const AppProvider = ({ children }: AppProviderProps) => {
   return (
-    <MantineProvider theme={theme} cssVariablesResolver={resolver}>
-      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
-    </MantineProvider>
+    <ReduxProvider store={store}>
+      <MantineProvider theme={theme} cssVariablesResolver={resolver}>
+        <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+      </MantineProvider>
+    </ReduxProvider>
   );
 };
 
