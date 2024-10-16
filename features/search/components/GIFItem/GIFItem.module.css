@@ -17,7 +17,7 @@
 
 .favBtnWrapper {
   @apply hidden;
-  @apply absolute top-1 right-1;
+  @apply absolute top-2 right-2;
 }
 
 .favBtn {
@@ -31,9 +31,9 @@
 }
 
 .userWrapper {
-  @apply absolute bottom-1 left-1 hidden;
+  @apply absolute bottom-2 left-2 hidden;
 }
 
 .user {
-  @apply absolute bottom-1 left-1 gap-2 max-w-[90] flex-nowrap;
+  @apply absolute bottom-2 left-2 gap-2 max-w-[90] flex-nowrap;
 }
