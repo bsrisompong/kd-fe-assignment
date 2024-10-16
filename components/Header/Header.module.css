@@ -1,6 +1,7 @@
 .container {
   @apply flex flex-row flex-nowrap justify-between items-center;
   @apply pr-2 xs:pr-4;
+  @apply border-none;
 }
 
 .logoWrapper {

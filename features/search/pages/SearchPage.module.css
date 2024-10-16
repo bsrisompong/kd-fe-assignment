@@ -6,3 +6,9 @@
   @apply columns-1 gap-4;
   @apply xs:columns-2 sm:columns-3 md:columns-4;
 }
+
+.bgEffect {
+  @apply w-full justify-center sticky z-50 top-[60px];
+  @apply py-4 px-2 sm:px-4 md:px-8;
+  @apply bg-[#ffffff7d] backdrop-blur-[33px] bg-blend-overlay;
+}

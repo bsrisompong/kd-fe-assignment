@@ -34,9 +34,7 @@ const PublicLayout = ({ children }: PublicLayoutProps) => {
     >
       <Header toggleSidebar={toggle} />
       <NavBar toggleSidebar={toggle} />
-      <AppShell.Main h="100dvh" miw={320}>
-        {children}
-      </AppShell.Main>
+      <AppShell.Main miw={320}>{children}</AppShell.Main>
       <AppShell.Footer className="px-2 xs:px-4 py-2">
         <Text size="sm" c="dimmed">
           ABC LTD @ 2021

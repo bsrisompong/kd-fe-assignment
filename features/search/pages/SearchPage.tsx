@@ -1,23 +1,24 @@
 "use client";
 
-import { useEffect, useMemo, useRef } from "react";
-import { Container } from "@mantine/core";
+import { useEffect, useMemo } from "react";
+import { Container, Group } from "@mantine/core";
+import { useMediaQuery } from "@mantine/hooks";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { useVirtualizer } from "@tanstack/react-virtual";
+// import { useVirtualizer } from "@tanstack/react-virtual";
+import { IGif } from "@giphy/js-types";
+import { Masonry, RenderComponentProps, useContainerPosition, usePositioner } from "masonic";
 
 // hooks
-import { useBreakpoints } from "@/hooks";
+import { useBreakpoints, useQueryParams } from "@/hooks";
 // apis
 import { fetchTrendingGiftsInfinite } from "../apis";
 // components
-import GIFItem from "../components/GIFItem";
+import { GIFItem } from "@/features/search";
+import { Searchbar } from "@/components";
 
 import classes from "./SearchPage.module.css";
 
-import { mockData } from "./mockData";
-
 const LIMIT = 20;
-// const GAP = 10;
 
 const getColumnNumber = ({
   isSmallMobile,
@@ -27,6 +28,7 @@ const getColumnNumber = ({
 }: {
   isSmallMobile?: boolean;
   isMobile?: boolean;
+  isSmallTablet?: boolean;
   isTablet?: boolean;
   isDesktop?: boolean;
 }) => {
@@ -38,9 +40,11 @@ const getColumnNumber = ({
 };
 
 export default function HomePage() {
-  const ref = useRef<HTMLDivElement>(null);
   const breakpoints = useBreakpoints();
   const columns = getColumnNumber({ ...breakpoints });
+
+  const { getQueryParams } = useQueryParams();
+  console.log(getQueryParams());
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } = useInfiniteQuery({
     queryKey: ["trending-gifts"],
@@ -49,57 +53,49 @@ export default function HomePage() {
     initialPageParam: 0,
   });
 
-  // const allItems = useMemo(() => data?.pages?.flatMap((page) => page.rows.data) || [], [data]);
-  const allItems = useMemo(() => mockData?.data?.flatMap((page) => page) || [], [data]);
-
-  const rowVirtualizer = useVirtualizer({
-    count: hasNextPage ? allItems.length + 1 : allItems.length,
-    getScrollElement: () => ref.current,
-    estimateSize: (i) => Number(allItems[i]?.images?.fixed_width?.height) || 0,
-    overscan: 5,
-    // lanes: 4,
-    lanes: columns,
-  });
+  const allItems = useMemo(() => data?.pages?.flatMap((page) => page.rows.data) || [], [data]);
 
   useEffect(() => {
-    const [lastItem] = [...rowVirtualizer.getVirtualItems()].reverse();
-    if (!lastItem) return;
+    const handleScroll = () => {
+      const scrollPosition = window.innerHeight + window.scrollY;
+      const threshold = document.body.scrollHeight - 100;
+      if (scrollPosition >= threshold && hasNextPage && !isFetchingNextPage) {
+        fetchNextPage();
+      }
+    };
 
-    if (lastItem.index >= allItems.length - 1 && hasNextPage && !isFetchingNextPage) {
-      fetchNextPage();
-    }
-  }, [
-    hasNextPage,
-    fetchNextPage,
-    allItems.length,
-    isFetchingNextPage,
-    rowVirtualizer.getVirtualItems(),
-  ]);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
 
-  const render = () => {
-    // if (status === "pending") return <div>Loading...</div>;
-    // if (status === "error") return <div>Error</div>;
-
+  const renderItem = (props: RenderComponentProps<IGif>) => {
+    const { data: item } = props;
     return (
-      <div className={classes.container} ref={ref}>
-        <div className={classes.gridContainer}>
-          {allItems.map((item, index) => (
-            <GIFItem
-              key={item.id}
-              imageUrl={item.images.fixed_width_downsampled?.url}
-              imageWidth={Number(item.images.fixed_width_downsampled?.width)}
-              imageHeight={Number(item.images.fixed_width_downsampled?.height)}
-              altText={`GIF ${index}`}
-            />
-          ))}
-        </div>
-      </div>
+      <GIFItem
+        key={item.id}
+        imageUrl={item?.images?.downsized?.url}
+        imageWidth={Number(item?.images?.downsized?.width)}
+        imageHeight={Number(item?.images?.downsized?.height)}
+        altText={item.title}
+      />
     );
   };
 
   return (
-    <Container size="100%" className="h-full" p={0} h="100%">
-      {render()}
+    <Container size="100%" className="h-full w-full relative p-0">
+      <Group classNames={{ root: classes.bgEffect }}>
+        <Searchbar />
+      </Group>
+      <Masonry<IGif>
+        items={allItems}
+        columnCount={columns}
+        columnGutter={10}
+        render={(props) => renderItem(props)}
+        overscanBy={5}
+      />
+      {status === "pending" && (
+        <div className="position-absolute right-1/2 left-1/2 bottom-20 z-50 ">Loading...</div>
+      )}
     </Container>
   );
 }
