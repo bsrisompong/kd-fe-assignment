@@ -29,7 +29,11 @@ export const useQueryParams = () => {
   );
 
   const getQueryParams = useCallback(() => {
-    return qs.parse(searchParams.toString());
+    if (!searchParams) return {};
+
+    return qs.parse(searchParams.toString(), {
+      ignoreQueryPrefix: true,
+    });
   }, [searchParams]);
 
   return { setQueryParams, getQueryParams };

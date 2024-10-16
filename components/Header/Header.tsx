@@ -20,7 +20,7 @@ const Header = ({ toggleSidebar }: HeaderProps) => {
 
   return (
     <AppShell.Header className={classes.container}>
-      <Group className="flex-start xs:justify-between w-full">
+      <Group className="flex-start xs:justify-between w-full gap-5">
         <ActionIcon
           className="xs:hidden ml-4"
           variant="outline"
@@ -36,6 +36,11 @@ const Header = ({ toggleSidebar }: HeaderProps) => {
             GIPHY <Text>Search</Text>
           </Title>
         </Group>
+        {/* <Searchbar
+          flex={1}
+          size="md"
+          classNames={{ input: "border-none rounded-full", wrapper: "h-full" }}
+        /> */}
         <Group className={classes.linkWrapper}>
           {links.map((link) => (
             <Anchor

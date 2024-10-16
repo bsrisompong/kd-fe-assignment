@@ -7,8 +7,8 @@
   @apply xs:columns-2 sm:columns-3 md:columns-4;
 }
 
-.bgEffect {
-  @apply w-full justify-center sticky z-50 top-[60px];
+.searchWrapper {
+  @apply w-full justify-center sticky z-50 top-[60px] right-0 left-0 mb-3;
   @apply py-4 px-2 sm:px-4 md:px-8;
-  @apply bg-[#ffffff7d] backdrop-blur-[33px] bg-blend-overlay;
+  @apply bg-[#ffffffa7] backdrop-blur-[33px] bg-blend-overlay;
 }

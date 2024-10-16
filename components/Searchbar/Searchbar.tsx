@@ -2,14 +2,14 @@
 
 import React, { useEffect, useState } from "react";
 import { IconSearch } from "@tabler/icons-react";
-import { CloseButton, Input } from "@mantine/core";
+import { CloseButton, Input, InputProps } from "@mantine/core";
 import { useDebouncedValue } from "@mantine/hooks";
 
 import { useQueryParams } from "@/hooks";
 
 import classes from "./Searchbar.module.css";
 
-const Searchbar = () => {
+const Searchbar = (props: InputProps) => {
   const { setQueryParams, getQueryParams } = useQueryParams();
   const [searchTerm, setSearchTerm] = useState<string>("");
 
@@ -46,6 +46,7 @@ const Searchbar = () => {
           className={searchTerm ? "visible" : "invisible"}
         />
       }
+      {...props}
     />
   );
 };

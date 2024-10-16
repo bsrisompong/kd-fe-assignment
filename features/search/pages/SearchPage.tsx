@@ -1,20 +1,19 @@
 "use client";
 
 import { useEffect, useMemo } from "react";
-import { Container, Group } from "@mantine/core";
-import { useMediaQuery } from "@mantine/hooks";
+import { Container, Group, LoadingOverlay } from "@mantine/core";
 import { useInfiniteQuery } from "@tanstack/react-query";
-// import { useVirtualizer } from "@tanstack/react-virtual";
+import { Masonry, RenderComponentProps } from "masonic";
 import { IGif } from "@giphy/js-types";
-import { Masonry, RenderComponentProps, useContainerPosition, usePositioner } from "masonic";
+import clsx from "clsx";
 
 // hooks
 import { useBreakpoints, useQueryParams } from "@/hooks";
 // apis
-import { fetchTrendingGiftsInfinite } from "../apis";
+import { fetchSearchGiftsInfinite, fetchTrendingGiftsInfinite } from "../apis";
 // components
-import { GIFItem } from "@/features/search";
-import { Searchbar } from "@/components";
+import { BottomLoader, GIFItem } from "@/features/search";
+import { NotFound, Searchbar } from "@/components";
 
 import classes from "./SearchPage.module.css";
 
@@ -42,13 +41,18 @@ const getColumnNumber = ({
 export default function HomePage() {
   const breakpoints = useBreakpoints();
   const columns = getColumnNumber({ ...breakpoints });
-
   const { getQueryParams } = useQueryParams();
-  console.log(getQueryParams());
+  const { search } = getQueryParams();
 
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } = useInfiniteQuery({
-    queryKey: ["trending-gifts"],
-    queryFn: (ctx) => fetchTrendingGiftsInfinite({ offset: ctx.pageParam, limit: LIMIT }),
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isFetching } = useInfiniteQuery({
+    queryKey: ["trending-gifts", search],
+    queryFn: (ctx) =>
+      search
+        ? fetchSearchGiftsInfinite({
+            term: String(search),
+            options: { limit: LIMIT, offset: ctx.pageParam },
+          })
+        : fetchTrendingGiftsInfinite({ offset: ctx.pageParam, limit: LIMIT }),
     getNextPageParam: (lastGroup) => lastGroup.nextOffset,
     initialPageParam: 0,
   });
@@ -77,25 +81,33 @@ export default function HomePage() {
         imageWidth={Number(item?.images?.downsized?.width)}
         imageHeight={Number(item?.images?.downsized?.height)}
         altText={item.title}
+        {...item}
       />
     );
   };
 
   return (
-    <Container size="100%" className="h-full w-full relative p-0">
-      <Group classNames={{ root: classes.bgEffect }}>
-        <Searchbar />
-      </Group>
-      <Masonry<IGif>
-        items={allItems}
-        columnCount={columns}
-        columnGutter={10}
-        render={(props) => renderItem(props)}
-        overscanBy={5}
-      />
-      {status === "pending" && (
-        <div className="position-absolute right-1/2 left-1/2 bottom-20 z-50 ">Loading...</div>
-      )}
-    </Container>
+    <>
+      <div className="relative p-0 h-[calc(100dvh-100px)]">
+        <Group className={clsx(classes.searchWrapper)}>
+          <Searchbar />
+        </Group>
+        <Container size={1440}>
+          {!isFetching && !isFetchingNextPage && allItems.length === 0 && (
+            <NotFound className="h-full" />
+          )}
+          <Masonry<IGif>
+            key={String(search) || "trending"}
+            items={allItems}
+            columnCount={columns}
+            columnGutter={10}
+            render={(props) => renderItem(props)}
+            overscanBy={5}
+          />
+          <LoadingOverlay visible={isFetching} loaderProps={{ type: "dots", size: "lg" }} />
+        </Container>
+        <BottomLoader visible={hasNextPage && isFetchingNextPage} />
+      </div>
+    </>
   );
 }

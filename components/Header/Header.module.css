@@ -1,39 +1,41 @@
 .container {
   @apply flex flex-row flex-nowrap justify-between items-center;
+  /* @apply h-[60px]; */
   @apply pr-2 xs:pr-4;
   @apply border-none;
 }
 
 .logoWrapper {
-  @apply items-center gap-3 cursor-pointer align-middle flex-nowrap;
+  @apply items-center gap-2 cursor-pointer align-middle flex-nowrap;
   & svg {
-    @apply h-[59px];
+    @apply h-[60px];
   }
   & h1 {
-    @apply font-thin text-3xl leading-7;
+    @apply font-bold text-3xl leading-7;
   }
 
   & p {
-    @apply font-bold text-lg leading-6;
+    @apply font-thin text-lg leading-6;
   }
 }
 
 .linkWrapper {
-  @apply hidden xs:flex;
-  @apply h-full gap-0;
+  @apply hidden xs:flex xs:items-center;
+  @apply h-[var(--app-shell-header-height)] gap-0;
 }
 
 .link {
+  @apply h-full !rounded-none;
   @apply flex items-center gap-2;
   @apply text-inherit font-semibold text-lg;
   @apply px-3 py-2 rounded-lg border-2;
 }
 
 .active {
-  @apply bg-gray-200;
+  @apply bg-black text-white;
   & svg {
     &:global(.search) {
-      /* @apply text-[var(--mantine-color-giphy-purple)]; */
+      @apply text-[var(--mantine-color-giphy-green)];
     }
     &:global(.fav) {
       @apply text-[var(--mantine-color-giphy-red)];

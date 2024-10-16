@@ -1,0 +1,6 @@
+.container {
+  @apply absolute right-1/2 left-1/2 bottom-5 translate-x-[-50%] z-50;
+  @apply h-[70px] w-[70px] rounded-full;
+  @apply flex justify-center items-center;
+  @apply bg-[#ffffffa7] backdrop-blur-[33px] bg-blend-overlay;
+}

@@ -5,7 +5,7 @@ import { gf } from "@/libs/giphy-fetch";
 
 interface Payload {
   term: string;
-  options?: SearchOptions;
+  options: SearchOptions;
 }
 
 const fetchTrendingGifts = async ({ term, options }: Payload): Promise<GifsResult> => {
@@ -22,3 +22,12 @@ export const useGetSearchGifts = (
     queryFn: () => fetchTrendingGifts(payload),
     ...options,
   });
+
+export const fetchSearchGiftsInfinite = async ({
+  term,
+  options,
+}: Payload): Promise<{ rows: GifsResult; nextOffset: number }> => {
+  const { offset = 0, limit = 10 } = options;
+  const response = await gf.search(term, options);
+  return { rows: response, nextOffset: offset + limit };
+};
