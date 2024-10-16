@@ -44,18 +44,19 @@ export default function HomePage() {
   const { getQueryParams } = useQueryParams();
   const { search } = getQueryParams();
 
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isFetching } = useInfiniteQuery({
-    queryKey: ["trending-gifts", search],
-    queryFn: (ctx) =>
-      search
-        ? fetchSearchGiftsInfinite({
-            term: String(search),
-            options: { limit: LIMIT, offset: ctx.pageParam },
-          })
-        : fetchTrendingGiftsInfinite({ offset: ctx.pageParam, limit: LIMIT }),
-    getNextPageParam: (lastGroup) => lastGroup.nextOffset,
-    initialPageParam: 0,
-  });
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isFetching, isLoading } =
+    useInfiniteQuery({
+      queryKey: ["trending-gifts", search],
+      queryFn: (ctx) =>
+        search
+          ? fetchSearchGiftsInfinite({
+              term: String(search),
+              options: { limit: LIMIT, offset: ctx.pageParam },
+            })
+          : fetchTrendingGiftsInfinite({ offset: ctx.pageParam, limit: LIMIT }),
+      getNextPageParam: (lastGroup) => lastGroup.nextOffset,
+      initialPageParam: 0,
+    });
 
   const allItems = useMemo(() => data?.pages?.flatMap((page) => page.rows.data) || [], [data]);
 
@@ -88,11 +89,11 @@ export default function HomePage() {
 
   return (
     <>
+      <Group className={clsx(classes.searchWrapper)}>
+        <Searchbar />
+      </Group>
       <div className="relative p-0 h-[calc(100dvh-100px)]">
-        <Group className={clsx(classes.searchWrapper)}>
-          <Searchbar />
-        </Group>
-        <Container size={1440}>
+        <Container size={1440} className="relative">
           {!isFetching && !isFetchingNextPage && allItems.length === 0 && (
             <NotFound className="h-full" />
           )}
@@ -100,13 +101,16 @@ export default function HomePage() {
             key={String(search) || "trending"}
             items={allItems}
             columnCount={columns}
-            columnGutter={10}
+            columnGutter={20}
             render={(props) => renderItem(props)}
             overscanBy={5}
           />
-          <LoadingOverlay visible={isFetching} loaderProps={{ type: "dots", size: "lg" }} />
+          <BottomLoader visible={hasNextPage && isFetchingNextPage} />
         </Container>
-        <BottomLoader visible={hasNextPage && isFetchingNextPage} />
+        <LoadingOverlay
+          visible={isLoading}
+          loaderProps={{ type: "oval", size: "lg", color: "black" }}
+        />
       </div>
     </>
   );

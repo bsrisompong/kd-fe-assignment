@@ -12,7 +12,7 @@ const BottomLoader = ({ visible, ...props }: BottomLoaderProps & LoaderProps) =>
   if (!visible) return null;
   return (
     <div className={clsx(classes.container)}>
-      <Loader color="blue" size="lg" type="dots" {...props} />
+      <Loader color="black" size="lg" type="oval" {...props} />
     </div>
   );
 };
