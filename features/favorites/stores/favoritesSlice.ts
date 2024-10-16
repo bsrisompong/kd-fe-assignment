@@ -1,9 +1,9 @@
 // src/features/favoritesSlice.ts
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IGif } from "@giphy/js-types";
+import { GifID, IGif } from "@giphy/js-types";
 
 interface FavoritesState {
-  items: { [id: string]: IGif };
+  items: { [id: GifID]: IGif };
 }
 
 const initialState: FavoritesState = {
@@ -20,7 +20,7 @@ const favoritesSlice = createSlice({
         state.items[id] = action.payload;
       }
     },
-    removeFavorite(state, action: PayloadAction<string>) {
+    removeFavorite(state, action: PayloadAction<GifID>) {
       delete state.items[action.payload];
     },
     toggleFavorite(state, action: PayloadAction<IGif>) {

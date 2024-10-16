@@ -1,0 +1,39 @@
+.container {
+  @apply relative overflow-hidden;
+  &:hover {
+    & img:global(.gif-image) {
+      @apply brightness-50;
+    }
+
+    & :global(.fav-btn-wrapper) {
+      @apply block z-50;
+    }
+
+    & :global(.user-wrapper) {
+      @apply block;
+    }
+  }
+}
+
+.favBtnWrapper {
+  @apply hidden;
+  @apply absolute top-1 right-1;
+}
+
+.favBtn {
+  @apply text-[var(--mantine-color-gray-5)] opacity-85;
+  &:hover {
+    @apply text-[var(--mantine-color-gray-7)] opacity-100;
+  }
+  &:global(.favorited) {
+    @apply text-[var(--mantine-color-giphy-red)];
+  }
+}
+
+.userWrapper {
+  @apply absolute bottom-1 left-1 hidden;
+}
+
+.user {
+  @apply absolute bottom-1 left-1 gap-2 max-w-[90] flex-nowrap;
+}
