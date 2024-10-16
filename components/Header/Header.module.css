@@ -25,6 +25,7 @@
 }
 
 .link {
+  text-decoration: none;
   @apply h-full !rounded-none;
   @apply flex items-center gap-2;
   @apply text-inherit font-semibold text-lg;

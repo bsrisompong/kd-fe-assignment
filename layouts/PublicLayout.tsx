@@ -15,11 +15,13 @@ export const links = [
     icon: <IconPhotoSearch className="search" />,
     link: "/",
     label: "Search",
+    key: "search",
   },
   {
     icon: <IconHeart className="fav" />,
     link: "/favorites",
     label: "Favorites",
+    key: "favorites",
   },
 ];
 

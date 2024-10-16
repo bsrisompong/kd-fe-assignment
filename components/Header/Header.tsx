@@ -1,12 +1,14 @@
+import { useMemo } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { ActionIcon, Anchor, AppShell, Group, Text, Title } from "@mantine/core";
+import { ActionIcon, Anchor, AppShell, Badge, Group, Text, Title } from "@mantine/core";
 import { IconMenu2 } from "@tabler/icons-react";
 import clsx from "clsx";
 
 import { links } from "@/layouts/PublicLayout";
-import { Giphy as GiphyIcon } from "@/assets";
+import { useFavorites } from "@/features/favorites";
 import { checkLinkActive } from "@/utils";
+import { Giphy as GiphyIcon } from "@/assets";
 
 import classes from "./Header.module.css";
 
@@ -17,6 +19,15 @@ interface HeaderProps {
 const Header = ({ toggleSidebar }: HeaderProps) => {
   const pathname = usePathname();
   const router = useRouter();
+
+  const { favoriteCount } = useFavorites();
+
+  const injectedLinks = useMemo(() => {
+    return links.map((link) => ({
+      ...link,
+      count: link.key === "favorites" ? favoriteCount : undefined,
+    }));
+  }, [favoriteCount]);
 
   return (
     <AppShell.Header className={classes.container}>
@@ -42,7 +53,7 @@ const Header = ({ toggleSidebar }: HeaderProps) => {
           classNames={{ input: "border-none rounded-full", wrapper: "h-full" }}
         /> */}
         <Group className={classes.linkWrapper}>
-          {links.map((link) => (
+          {injectedLinks.map((link) => (
             <Anchor
               component={Link}
               href={link.link}
@@ -50,9 +61,17 @@ const Header = ({ toggleSidebar }: HeaderProps) => {
               className={clsx(classes.link, {
                 [classes.active]: checkLinkActive(pathname, link.link),
               })}
+              style={{
+                textDecoration: "none",
+              }}
             >
               {link.icon}
               {link.label}
+              {link.count && (
+                <Badge color="red" size="lg" circle>
+                  {link.count}
+                </Badge>
+              )}
             </Anchor>
           ))}
         </Group>
