@@ -7,7 +7,7 @@ const NotFound = ({ label, ...props }: StackProps & { label?: React.ReactNode })
     <Stack justify="center" align="center" gap="xs" py={80} {...props}>
       <IconPhotoOff size={80} color="var(--mantine-color-gray-5)" />
       <Text fw={700} c="gray.5">
-        {label ?? "Not Found"}
+        {label ?? "No results found"}
       </Text>
     </Stack>
   );

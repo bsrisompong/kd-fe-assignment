@@ -31,9 +31,11 @@ export default function FavoritesPage() {
 
   return (
     <>
-      <div className="relative h-[calc(100dvh-100px)]">
+      <div className="relative min-h-[calc(100dvh-100px)]">
         <div className="relative max-w-[1440px] mx-auto py-5 px-5">
-          <Title className="mb-5">Favorites</Title>
+          <Title className="mb-5">
+            Favorites <span>({favoriteCount})</span>
+          </Title>
           {!favoriteCount && <NotFound label="No Favorites" />}
           <Masonry<IGif>
             key={`favorites-${favoriteCount}`}

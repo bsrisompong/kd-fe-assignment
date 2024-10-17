@@ -29,9 +29,10 @@ const GIFItem = ({
   const ratio = imageWidth / imageHeight;
 
   return (
-    <div className={clsx(classes.container, "gif-container")}>
+    <div data-testid="gif-item" className={clsx(classes.container, "gif-container")}>
       <div className={clsx(classes.favBtnWrapper, "fav-btn-wrapper")}>
         <ActionIcon
+          data-testid="favorite-button"
           variant="default"
           size="lg"
           onClick={() => toggleFavorite(props)}

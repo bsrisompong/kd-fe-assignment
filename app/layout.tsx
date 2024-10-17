@@ -1,6 +1,5 @@
 import "@mantine/core/styles.css";
 import "@/styles/global.css";
-import { ColorSchemeScript } from "@mantine/core";
 import AppProvider from "@/providers/AppProvider";
 
 export const metadata = {
@@ -12,7 +11,6 @@ export default function RootLayout({ children }: { children: any }) {
   return (
     <html lang="en">
       <head>
-        <ColorSchemeScript />
         <link rel="shortcut icon" href="/favicon.svg" />
         <meta
           name="viewport"

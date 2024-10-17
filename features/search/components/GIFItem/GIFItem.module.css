@@ -6,7 +6,7 @@
     }
 
     & :global(.fav-btn-wrapper) {
-      @apply block z-10;
+      @apply block z-20;
     }
 
     & :global(.user-wrapper) {

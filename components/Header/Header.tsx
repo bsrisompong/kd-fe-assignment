@@ -67,7 +67,7 @@ const Header = ({ toggleSidebar }: HeaderProps) => {
             >
               {link.icon}
               {link.label}
-              {link.count && (
+              {!!link.count && (
                 <Badge color="red" size="lg" circle>
                   {link.count}
                 </Badge>

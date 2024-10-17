@@ -30,6 +30,7 @@ const Searchbar = (props: InputProps) => {
 
   return (
     <Input
+      data-testid="searchbar-input"
       value={searchTerm}
       onChange={(e) => setSearchTerm(e.target.value)}
       placeholder="Search gifs"

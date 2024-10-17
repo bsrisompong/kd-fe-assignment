@@ -34,7 +34,10 @@ export default function SearchPage() {
               options: { limit: LIMIT, offset: ctx.pageParam },
             })
           : fetchTrendingGiftsInfinite({ offset: ctx.pageParam, limit: LIMIT }),
-      getNextPageParam: (lastGroup) => lastGroup.nextOffset,
+      getNextPageParam: (lastGroup) => {
+        const _hasNextPage = lastGroup.rows.pagination?.total_count > lastGroup.nextOffset;
+        return _hasNextPage ? lastGroup.nextOffset : undefined;
+      },
       initialPageParam: 0,
     });
 
@@ -72,7 +75,7 @@ export default function SearchPage() {
       <Group className={clsx(classes.searchWrapper)}>
         <Searchbar />
       </Group>
-      <div className="relative h-[calc(100dvh-100px)]">
+      <div className="relative min-h-[calc(100dvh-100px)]">
         <div className="relative max-w-[1440px] mx-auto">
           {!isFetching && !isFetchingNextPage && allItems.length === 0 && (
             <NotFound className="h-full" />
