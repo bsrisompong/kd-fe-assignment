@@ -8,7 +8,7 @@ import { IGif } from "@giphy/js-types";
 import clsx from "clsx";
 
 // hooks
-import { useBreakpoints, useGetColumns, useQueryParams } from "@/hooks";
+import { useGetColumns, useQueryParams } from "@/hooks";
 // apis
 import { fetchSearchGiftsInfinite, fetchTrendingGiftsInfinite } from "../apis";
 // components
